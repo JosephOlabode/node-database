@@ -16,16 +16,38 @@ class MongoBackend {
 
   async connect() {
     const mongoClient = new MongoClient(this.mongoUrl, { useUnifiedTopology: true, useNewUrlParser: true});
-    this.client = await mongoClient.connect()
+    this.client = await mongoClient.connect();
+    this.collection = this.client.db('maxcoin').collection('values');
+    return this.client;
   }
 
-  async disconnect() {}
+  async disconnect() {
+    if(this.client) {
+      return this.client.close();
+    }
+    return false;
+  }
 
   async insert() {}
 
   async getMax() {}
 
-  async max() {}
+  async max() {
+    console.info('Connection to MongoDB');
+    console.time('mongodb-connect');
+    const client = await this.connect();
+    if(client) {
+      console.info('Successfully connected to MongoDB');
+    } else {
+      throw new Error('Connecting to MongoDB failed');
+    }
+    console.timeEnd('mongodb-connect');
+
+    console.info('Disconnecting from MongoDB');
+    console.time('mongodb-disconnect');
+    await this.disconnect();
+    console.timeEnd('mongodb-disconnect');
+  }
 }
 
 module.exports = MongoBackend;
