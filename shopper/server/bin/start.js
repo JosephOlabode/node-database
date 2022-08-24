@@ -9,7 +9,7 @@ const App = require('../app');
 async function connectToMongoose() {
   return mongoose.connect(config.mongodb.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   });
 }
 
