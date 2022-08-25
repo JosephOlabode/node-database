@@ -4,7 +4,7 @@ class BasketService {
         this.key = `basket:${userId}`
     }
 
-    async addItem(itemId) {
+    async add(itemId) {
         return this.client.hincrby(this.key, itemId, 1);
     }
 
