@@ -4,6 +4,17 @@ const UserService = require('../../../models/mongoose/User');
 module.exports = () => {
   const router = express.Router();
 
+  router.get('/', async(req, res, next) => {
+    try {
+      const users = await UserService.getAll();
+
+      return res.render("admin/user", {
+        users,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  })
   router.get("/:userId?", async (req, res, next) => {
     try {
       const users = await UserService.getAll();

@@ -1,6 +1,7 @@
 const UserModel = require('../models/mongoose/User');
 
 class UserService {
+  
   static async getAll() {
     return UserModel.find({}).sort({ createdAt: -1 });
   }
